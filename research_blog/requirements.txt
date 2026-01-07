@@ -3,3 +3,8 @@ langchain_groq
 python-dotenv
 crewai
 crewai-tools
+litellm
+fastapi
+apscheduler
+email_validator
+fastapi_sso
