@@ -1,54 +1,218 @@
-# ResearchBlog Crew
+# Research Blog – CrewAI Project
 
-Welcome to the ResearchBlog Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+This project is a **CrewAI-based agentic application** designed to research topics and generate structured blog-style outputs using multiple AI agents and tasks.
 
-## Installation
+The repository follows a clean, production-friendly layout that separates configuration, tools, agents, and execution logic.
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+---
 
-First, if you haven't already, install uv:
+## 📂 Project Structure
 
-```bash
-pip install uv
+```
+research_blog/
+│
+├── .venv/                  # Python virtual environment (local)
+├── knowledge/              # Knowledge base / reference documents for agents
+│
+├── src/
+│   └── research_blog/
+│       ├── config/
+│       │   ├── agents.yaml # Agent definitions (roles, goals, LLM config)
+│       │   └── tasks.yaml  # Task definitions and agent-task mapping
+│       │
+│       ├── tools/          # Custom tools used by agents
+│       │   └── __init__.py
+│       │
+│       ├── crew.py         # CrewAI crew setup (agents + tasks)
+│       ├── main.py         # Application entry point
+│       └── __init__.py
+│
+├── tests/                  # Unit / integration tests
+│
+├── .env                    # Environment variables (API keys, configs)
+├── .gitignore
+├── demo.ipynb              # Jupyter notebook for experimentation
+├── pyproject.toml          # Project metadata and tooling config
+├── requirements.txt        # Python dependencies
+├── uv.lock                 # Dependency lock file (uv)
+└── README.md               # Project documentation
 ```
 
-Next, navigate to your project directory and install the dependencies:
+---
 
-(Optional) Lock the dependencies and install them by using the CLI command:
+## 🚀 Features
+
+* Multi-agent orchestration using **CrewAI**
+* YAML-based configuration for agents and tasks
+* Extensible tool system for agent capabilities
+* Clean separation of logic and configuration
+* Easy to switch LLM providers (Groq, OpenAI, Ollama, etc.)
+
+---
+
+## 🔧 Prerequisites
+
+* Python **3.10+**
+* Virtual environment tool (`venv` or `uv`)
+* API key for your chosen LLM provider (e.g., Groq, OpenAI)
+
+---
+
+## 📦 Installation
+
+
+
+### 2️⃣ Create and activate virtual environment
+
+**Windows (PowerShell)**
+
 ```bash
-crewai install
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
-### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/research_blog/config/agents.yaml` to define your agents
-- Modify `src/research_blog/config/tasks.yaml` to define your tasks
-- Modify `src/research_blog/crew.py` to add your own logic, tools and specific args
-- Modify `src/research_blog/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+**Linux / macOS**
 
 ```bash
-$ crewai run
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-This command initializes the research_blog Crew, assembling the agents and assigning them tasks as defined in your configuration.
+### 3️⃣ Install dependencies
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+```bash
+pip install -r requirements.txt
+```
 
-## Understanding Your Crew
+or if using **uv**:
 
-The research_blog Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+```bash
+uv sync
+```
 
-## Support
+---
 
-For support, questions, or feedback regarding the ResearchBlog Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+## 🔑 Environment Variables
 
-Let's create wonders together with the power and simplicity of crewAI.
+Create a `.env` file in the root directory:
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+> Only include the API key for the provider you are using.
+
+---
+
+## 🧠 Agents & Tasks Configuration
+
+### `config/agents.yaml`
+
+Defines:
+
+* Agent role
+* Goal
+* Backstory
+* LLM model
+* Tools used by the agent
+
+### `config/tasks.yaml`
+
+Defines:
+
+* Task description
+* Expected output
+* Assigned agent
+* Execution order
+
+This design allows **non-code changes** to agent behavior.
+
+---
+
+## ▶️ Running the Project
+
+From the project root:
+
+```bash
+python -m src.research_blog.main
+```
+
+This will:
+
+1. Load agents from `agents.yaml`
+2. Load tasks from `tasks.yaml`
+3. Create a Crew
+4. Execute tasks sequentially or hierarchically
+
+---
+
+## 🛠 Custom Tools
+
+Add custom tools inside:
+
+```
+src/research_blog/tools/
+```
+
+Each tool should:
+
+* Be a Python function or class
+* Follow CrewAI tool conventions
+* Be imported and assigned to agents in `agents.yaml`
+
+---
+
+## 🧪 Testing
+
+Run tests using:
+
+```bash
+pytest
+```
+
+---
+
+## 📓 Jupyter Notebook
+
+`demo.ipynb` can be used to:
+
+* Experiment with agents
+* Debug tasks
+* Test prompts interactively
+
+---
+
+## 🔄 Extending the Project
+
+You can easily:
+
+* Add new agents in `agents.yaml`
+* Add new tasks in `tasks.yaml`
+* Plug in new LLMs (Groq, Ollama, OpenAI)
+* Add RAG using the `knowledge/` directory
+
+---
+
+## 🧩 Common Use Cases
+
+* Automated research blogging
+* Content generation pipelines
+* Agentic AI learning projects
+* CrewAI production templates
+
+---
+
+## 📜 License
+
+This project is for educational and experimental purposes.
+
+---
+
+## 🙌 Author
+
+**Husen Basha**
+
+If you are learning CrewAI or Agentic AI, this project is a solid foundation to build upon.
+
+Happy building 🚀
