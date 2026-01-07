@@ -1,0 +1,28 @@
+[project]
+name = "research_blog"
+version = "0.1.0"
+description = "research_blog using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai-tools>=1.7.2",
+    "crewai[tools]==1.7.2",
+    "langchain>=1.2.1",
+    "langchain-groq>=1.1.1",
+    "python-dotenv>=1.1.1",
+]
+
+[project.scripts]
+research_blog = "research_blog.main:run"
+run_crew = "research_blog.main:run"
+train = "research_blog.main:train"
+replay = "research_blog.main:replay"
+test = "research_blog.main:test"
+run_with_trigger = "research_blog.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
