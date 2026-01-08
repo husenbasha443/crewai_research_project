@@ -37,7 +37,8 @@ class ResearchBlog():
     def blog_writing_task(self)->Task:
         return Task(
             config=self.tasks_config["blog_writing_task"],
-            output_file = "blogs/blog.md"
+            output_file = "outputs/interview_questions.md"
+
         )
 
     ### Define the Crew
